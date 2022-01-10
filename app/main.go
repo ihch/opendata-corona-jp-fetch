@@ -3,7 +3,7 @@ package main
 import (
   "fmt"
 
-  . "opendata-corona-jp-batch"
+  . "github.com/ihch/opendata-corona-jp-fetch"
 )
 
 func main() {
