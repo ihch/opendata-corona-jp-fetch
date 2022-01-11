@@ -1,9 +1,10 @@
 package root
 
 import (
-  "encoding/json"
-  "net/http"
-  "log"
+	"encoding/json"
+	"log"
+	"net/http"
+	"strconv"
 )
 
 /*
@@ -19,4 +20,32 @@ func FetchCovid19JapanAll() (covidItemList APICovidItemList, err error) {
   json.NewDecoder(response.Body).Decode(&covidItemList)
 
   return covidItemList, nil
+}
+
+func TransformToCoronaItem(data *APICovidItem) CovidItem {
+  totalPatients, err := strconv.Atoi(data.Npatients)
+  if err != nil {
+    totalPatients = 0
+  }
+
+  return CovidItem{
+    Date: data.Date,
+    Prefecture: data.NameJp,
+    Patients: 0,
+    TotalPatients: totalPatients,
+  }
+}
+
+func TransformToCoronaItemWithBeforePatients(data *APICovidItem, beforePatients int) CovidItem {
+  totalPatients, err := strconv.Atoi(data.Npatients)
+  if err != nil {
+    totalPatients = 0
+  }
+
+  return CovidItem{
+    Date: data.Date,
+    Prefecture: data.NameJp,
+    Patients: totalPatients - beforePatients,
+    TotalPatients: totalPatients,
+  }
 }
