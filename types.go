@@ -18,8 +18,8 @@ type APICovidItemList struct {
 type CovidItem struct {
   Date string `json:"date"`;
   Prefecture string `json:"prefecture"`;
-  Patients string `json:"patients"`;
-  TotalPatients string `json:"totalPatients"`;
+  Patients int `json:"patients"`;
+  TotalPatients int `json:"totalPatients"`;
 }
 
 type CovidItems = []CovidItem;
